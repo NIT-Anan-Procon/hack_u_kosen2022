@@ -48,22 +48,6 @@ function addVideo() {
   video.load();
 }
 
-/*
-var BANNER_APPEAR_DELAY = 1000 * 0.5;
-var BANNER_REMOVE_AFTER_SEC = 1000 * 8;
-var BANNER_APPEAR_PROBABILITY = 0.05;
-var BANNER_LOCAL_STORAGE_KEY = 'hasClickedOnBanner';
-var LIKEONFB_LOCAL_STORAGE_KEY = 'hasClickedOnBannerLikeOnFB';
-*/
-
-/*
-function reset() {
-  removeVideo(false);
-  removeRateMe(false);
-}
-*/
-
-/*
 function removeVideo(showRateMe) {
   var $videoEl = $('.shia-do-it');
   if ($videoEl !== null) {
@@ -83,6 +67,20 @@ function removeVideo(showRateMe) {
       }
     });
   }
+}
+
+/*
+var BANNER_APPEAR_DELAY = 1000 * 0.5;
+var BANNER_REMOVE_AFTER_SEC = 1000 * 8;
+var BANNER_APPEAR_PROBABILITY = 0.05;
+var BANNER_LOCAL_STORAGE_KEY = 'hasClickedOnBanner';
+var LIKEONFB_LOCAL_STORAGE_KEY = 'hasClickedOnBannerLikeOnFB';
+*/
+
+/*
+function reset() {
+  removeVideo(false);
+  removeRateMe(false);
 }
 */
 
