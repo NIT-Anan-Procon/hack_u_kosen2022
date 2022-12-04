@@ -1,1 +1,1 @@
-# hack_u_kosen2022_
+# hack_u_kosen2022
