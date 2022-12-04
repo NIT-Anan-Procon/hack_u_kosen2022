@@ -22,7 +22,7 @@ function addVideo() {
   //reset();
 
   //1. innerHTMLの兄弟
-  var $videoDiv = $.parseHTML('<div class="shia-do-it"><div class="container"><img height=20px name="media"></div></div>');
+  var $videoDiv = $.parseHTML('<div class="shia-do-it"><div class="container"><img name="media"></div></div>');
   $('body').append($videoDiv);
 
   //2. 1で作ったdivにvideoをぶち込む
