@@ -6,7 +6,7 @@ chrome.browserAction.onClicked.addListener(function () {
             file: "bower_components/jquery/dist/jquery.min.js"
         }, function () {
             chrome.tabs.executeScript(null, {
-                file: "scripts/doit.js"
+                file: "scripts/odorec.js"
             }, null)
         })
     })
