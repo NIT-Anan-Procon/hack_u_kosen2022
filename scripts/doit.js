@@ -22,12 +22,12 @@ function addVideo() {
   //reset();
 
   //1. innerHTMLの兄弟
-  var $videoDiv = $.parseHTML('<div class="shia-do-it"><div class="container"><video width="960" height="540" name="media" loop></div></div>');
+  var $videoDiv = $.parseHTML('<div class="shia-do-it"><div class="container"><img name="media"></div></div>');
   $('body').append($videoDiv);
 
   //2. 1で作ったdivにvideoをぶち込む
-  var video = $($videoDiv).find('video').get(0);
-  var filename = 'assets/' + 'muscle' + '.mov';
+  var video = $($videoDiv).find('img').get(0);
+  var filename = 'assets/hiyoko.gif';
   video.src = chrome.extension.getURL(filename);
 
   video.onended = function () {
