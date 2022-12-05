@@ -10,12 +10,17 @@ jquery.min.js : jqueryを使うためのファイル
 
 ## images
 icon-16.png : 16pxのアイコンファイル
+
 icon-19.png : 19pxのアイコンファイル
+
 icon-38.png : 38pxのアイコンファイル
+
 icon-128.png : 128pxのアイコンファイル
+
 
 ## scripts
 background.js : 謎ファイル、なくてはならない
+
 odorec.js : webサイトにgif画像を表示
 
 ## styles
