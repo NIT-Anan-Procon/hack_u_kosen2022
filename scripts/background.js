@@ -2,7 +2,7 @@
 chrome.browserAction.onClicked.addListener(function () {
     chrome.tabs.getSelected(null, function (a) {
         var b = a.url;
-        b.indexOf("chrome.google.com/webstore") >= 0 ? alert("Please try on any tab OTHER than the CHROME STORE \n dont let your dream be dreams , DO IT!") : b.indexOf("chrome://") >= 0 ? alert("Browse to any website and try again! \nWHAT ARE YOU WAITING FOR? DO IT!") : chrome.tabs.executeScript(null, {
+        b.indexOf("chrome.google.com/webstore") >= 0 ? alert("Please try on any tab OTHER than the CHROME STORE \n SEE YOU NEXT TIME!!") : b.indexOf("chrome://") >= 0 ? alert("Browse to any website and try again! \nWHAT ARE YOU WAITING FOR? DO IT!") : chrome.tabs.executeScript(null, {
             file: "bower_components/jquery/dist/jquery.min.js"
         }, function () {
             chrome.tabs.executeScript(null, {
