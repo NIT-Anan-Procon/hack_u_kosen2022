@@ -46,3 +46,10 @@ div.shia-rate-me-now {
 div.shia-rate-me-now:hover {
   background: #b9c8ff;
 }
+
+canvas {
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+}

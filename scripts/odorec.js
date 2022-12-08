@@ -5,9 +5,69 @@
 'use strict';
 
 (function () {
+  setup();
+  Test();
   injectCss();
   addVideo();
+  //ここに追加
 })();
+
+function setup() {
+  var $test = $.parseHTML('<div class="test"><video id="camera" width="1280" height="720"></video><button type="button" id="start" onclick="Test()">Test</button><canvas id="canvas" width="1280" height="720"></canvas></div>');
+  $('body').append($test);
+
+  let video = document.getElementById("camera");
+  navigator.mediaDevices
+  .getUserMedia({
+    audio: false,
+    video: {
+      width: 1280,
+      height: 720,
+    },
+  })
+  .then((stream) => {
+    video.srcObject = stream;
+    video.onloadedmetadata = () => {
+      video.play();
+    };
+  })
+  .catch((error) => {
+    console.log(error.name + ": " + error.message);
+  });
+}
+
+function Test() {
+  const canvas = document.getElementById("canvas");
+  let video = document.getElementById("camera");
+  setInterval(() => {
+    canvas
+      .getContext("2d")
+      .drawImage(
+        video,
+        0,
+        0,
+        canvas.width,
+        canvas.height,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+    fetch("http://202.231.44.30:8080/measure-variable", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        image: canvas.toDataURL().replace(/^data:\w+\/\w+;base64,/, ""),
+      }),
+    })
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        console.log(data["variable"]);
+      });
+  }, 700);
+}
 
 //CSSを埋め込んでる
 function injectCss() {
@@ -68,6 +128,9 @@ function removeVideo(showRateMe) {
     });
   }
 }
+
+
+
 
 /*
 var BANNER_APPEAR_DELAY = 1000 * 0.5;
