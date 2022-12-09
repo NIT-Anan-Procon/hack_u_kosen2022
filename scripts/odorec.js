@@ -9,7 +9,6 @@ var previousVolume = 0
   Test();
   injectCss();
   addVideo();
-  beginDetect();
   //ここに追加
 })();
 
@@ -193,6 +192,7 @@ function volumeAudioProcess(event) {
       sum += x * x
   }
   const rms = Math.sqrt(sum / bufLength)
+  //計算には二乗平均平方根(RMS: root mean square）を用いる
   this.volume = Math.max(rms, this.volume * this.averaging)
 
   // ボリュームの表示
