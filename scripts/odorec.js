@@ -38,7 +38,6 @@ function setup() {
 
   // オーディオストリームの生成
   let audioContext = new (window.AudioContext || window.webkitAudioContext)()
-  console.log(audioContext)
 
   // 音声入力の開始
   if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -143,21 +142,6 @@ function removeVideo(showRateMe) {
     });
   }
 }
-
-// function beginDetect() {
-//   // オーディオストリームの生成
-//   audioContext = new (window.AudioContext || window.webkitAudioContext)()
-
-//   // 音声入力の開始
-//   if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-//       navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
-//           // メディアストリームソースとメーターの生成
-//           mediaStreamSource = audioContext.createMediaStreamSource(stream)
-//           meter = createAudioMeter(audioContext)
-//           mediaStreamSource.connect(meter)
-//       })
-//   }
-// }
 
 // メーターの生成
 function createAudioMeter(audioContext, clipLevel, averaging, clipLag) {
