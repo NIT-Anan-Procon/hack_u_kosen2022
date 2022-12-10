@@ -80,7 +80,7 @@ function Test() {
         console.log(data["variable"]);
       });
       //2秒間隔でデータ送信
-  }, 2000);
+  }, 700);
 }
 
 //CSSを埋め込んでる
@@ -96,12 +96,12 @@ function addVideo() {
   //reset();
 
   //1. innerHTMLの兄弟
-  var $videoDiv = $.parseHTML('<div class="shia-do-it" id="target"><div class="container"><img height=60 name="media"></div></div>');
+  var $videoDiv = $.parseHTML('<div class="shia-do-it" id="target"><div class="container"><img height=500 name="media"></div></div>');
   $('body').append($videoDiv);
 
   //2. 1で作ったdivにvideoをぶち込む
   var video = $($videoDiv).find('img').get(0);
-  var filename = 'assets/lovegun.gif';
+  var filename = 'assets/test.gif';
   video.src = chrome.extension.getURL(filename);
 
   video.onended = function () {
@@ -206,37 +206,79 @@ function volumeAudioProcess(event) {
   previousVolume = this.volume;
 }
 
-//ボリュームの大きさで画像を変える
-function changeVideo(judge) {
+//泣く前事前準備
+function changeVideobefore() {
+  
   //今出てる画像を削除する。
   document.getElementById('target').remove();
 
   //新しい画像をページに追加する
-  var $videoDiv = $.parseHTML('<div class="shia-do-it" id="target"><div class="container"><img height=60 name="media"></div></div>');
+  var $videoDiv = $.parseHTML('<div class="shia-do-it" id="target"><div class="container"><img height=500 name="media"></div></div>');
   $('body').append($videoDiv);
   var video = $($videoDiv).find('img').get(0);
-  var filename = 'assets/headphone.gif';
-  
-  if(judge > 0.12) {
-    filename = 'assets/flower.gif';
-    console.log('your voice is big!' + filename);
-    
-  }else if(judge > 0.09) {
-    filename = 'assets/headphone.gif';
-    console.log('your voice is so-so' + filename);
-    
-  }else if(judge > 0.07) {
-    filename = 'assets/bonus.gif';
-    console.log('your voice is small..' + filename);
-    
-  }else if(judge > 0.05) {
-    filename = 'assets/lovegun.gif';
-    console.log('your voice is so small...' + filename);
-    
-  }else {
-    console.log('bag');
-  }
+  var filename = 'assets/test2.gif';
   video.src = chrome.extension.getURL(filename);
+}
+
+//ボリュームの大きさで画像を変える
+function changeVideo(judge) {
+  //泣く前事前準備
+  changeVideobefore();
+  
+  //1秒後に変換
+  sleep(2, function() {
+    //今出てる画像を削除する。
+    document.getElementById('target').remove();
+    var $videoDiv = $.parseHTML('<div class="shia-do-it" id="target"><div class="container"><img height=500 name="media"></div></div>');
+    $('body').append($videoDiv);
+    var video = $($videoDiv).find('img').get(0);
+    var filename = 'assets/test3.gif';
+    
+    if(judge > 0.12) {
+      filename = 'assets/test4.gif';
+      console.log('your voice is big!' + filename);
+      
+    }else if(judge > 0.09) {
+      filename = 'assets/test4.gif';
+      console.log('your voice is so-so' + filename);
+      
+    }else if(judge > 0.07) {
+      filename = 'assets/test3.gif';
+      console.log('your voice is small..' + filename);
+      
+    }else if(judge > 0.05) {
+      filename = 'assets/test3.gif';
+      console.log('your voice is so small...' + filename);
+      
+    }else {
+      console.log('bag');
+    }
+    video.src = chrome.extension.getURL(filename);
+    console.log('1秒経過しました！');
+    //新しい画像をページに追加する
+  });
+}
+
+function sleep(waitSec, callbackFunc) {
+
+  var spanedSec = 0;
+
+  var waitFunc = function () {
+
+      spanedSec++;
+
+      if (spanedSec >= waitSec) {
+          if (callbackFunc) callbackFunc();
+          return;
+      }
+
+      clearTimeout(id);
+      id = setTimeout(waitFunc, 1000);
+  
+  };
+
+  var id = setTimeout(waitFunc, 1000);
+
 }
 
 /*
