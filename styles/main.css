@@ -53,3 +53,7 @@ canvas {
   top: 0;
   left: 0;
 }
+
+.test {
+  display: none;
+}

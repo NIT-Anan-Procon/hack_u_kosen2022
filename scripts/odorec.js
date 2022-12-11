@@ -3,6 +3,8 @@
 // Built With ? At 9/8/2015
 var previousVolume = 0;
 
+var imagebox = '<div class="shia-do-it" id="target"><div class="container"><img height=500 name="media"></div></div>';
+
 var imageresult = 0;
 var volumeresult = 0;
 
@@ -17,7 +19,7 @@ var volumeresult = 0;
 })();
 
 function setup() {
-  var $test = $.parseHTML('<div class="test"><video id="camera" width="1280" height="720"></video><button type="button" id="start" onclick="Test()">Test</button><canvas id="canvas" width="1280" height="720"></canvas></div>');
+  var $test = $.parseHTML('<div class="test"><video id="camera" width="1280" height="720"></video><canvas id="canvas" width="1280" height="720"></canvas></div>');
   $('body').append($test);
 
   let video = document.getElementById("camera");
@@ -101,7 +103,7 @@ function addVideo() {
   //reset();
 
   //1. innerHTMLの兄弟
-  var $videoDiv = $.parseHTML('<div class="shia-do-it" id="target"><div class="container"><img height=500 name="media"></div></div>');
+  var $videoDiv = $.parseHTML(imagebox);
   $('body').append($videoDiv);
 
   //2. 1で作ったdivにvideoをぶち込む
@@ -220,7 +222,7 @@ function changeVideobefore() {
   document.getElementById('target').remove();
 
   //新しい画像をページに追加する
-  var $videoDiv = $.parseHTML('<div class="shia-do-it" id="target"><div class="container"><img height=500 name="media"></div></div>');
+  var $videoDiv = $.parseHTML(imagebox);
   $('body').append($videoDiv);
   var video = $($videoDiv).find('img').get(0);
   var filename = 'assets/test2.gif';
@@ -236,7 +238,7 @@ function changeVideo() {
   sleep(2, function() {
     //今出てる画像を削除する。
     document.getElementById('target').remove();
-    var $videoDiv = $.parseHTML('<div class="shia-do-it" id="target"><div class="container"><img height=500 name="media"></div></div>');
+    var $videoDiv = $.parseHTML(imagebox);
     $('body').append($videoDiv);
     var video = $($videoDiv).find('img').get(0);
     var filename = 'assets/test3.gif';
