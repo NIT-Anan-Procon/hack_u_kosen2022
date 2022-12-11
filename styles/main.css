@@ -50,3 +50,10 @@ canvas {
 .test {
   display: none;
 }
+
+img[name="media"] {
+  position: absolute;
+  right: 3vw;
+  bottom: -3vh;
+  font-size: 30vw;
+}
