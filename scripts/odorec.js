@@ -1,7 +1,11 @@
 // 'PK' (www.pavel-kaminsky)
 // All Rights Reserved.
 // Built With ? At 9/8/2015
-var previousVolume = 0
+var previousVolume = 0;
+
+var imageresult = 0;
+var volumeresult = 0;
+
 'use strict';
 
 (function () {
@@ -77,7 +81,8 @@ function Test() {
         return response.json();
       })
       .then(function (data) {
-        console.log(data["variable"]);
+        imageresult = data["variable"];
+        console.log(imageresult);
       });
       //2秒間隔でデータ送信
   }, 700);
@@ -198,10 +203,12 @@ function volumeAudioProcess(event) {
 
   // ボリュームの表示
   if (this.volume - previousVolume > 0.05) {
-      var judge = this.volume - previousVolume;
-      console.log(judge);
+      var tmpVolume = this.volume - previousVolume;
+      console.log(tmpVolume);
+      //グローバル変数volumeresultに計測値を保存
+      volumeresult = tmpVolume;
       //ボリュームの大きさで画像を変える
-      changeVideo(judge);
+      changeVideo();
   }
   previousVolume = this.volume;
 }
@@ -221,7 +228,7 @@ function changeVideobefore() {
 }
 
 //ボリュームの大きさで画像を変える
-function changeVideo(judge) {
+function changeVideo() {
   //泣く前事前準備
   changeVideobefore();
   
@@ -233,25 +240,29 @@ function changeVideo(judge) {
     $('body').append($videoDiv);
     var video = $($videoDiv).find('img').get(0);
     var filename = 'assets/test3.gif';
+
+    var judge = calcSurpriseDegree();
     
-    if(judge > 0.12) {
+    if(judge > 80) {
       filename = 'assets/test4.gif';
-      console.log('your voice is big!' + filename);
+      console.log(`合計点：${judge}\n画像処理：${imageresult}\n音声処理：${volumeresult}\n使用GIF${filename}`);
       
-    }else if(judge > 0.09) {
+    }else if(judge > 60) {
       filename = 'assets/test4.gif';
-      console.log('your voice is so-so' + filename);
+      console.log(`合計点：${judge}\n画像処理：${imageresult}\n音声処理：${volumeresult}\n使用GIF${filename}`);
       
-    }else if(judge > 0.07) {
+    }else if(judge > 30) {
       filename = 'assets/test3.gif';
-      console.log('your voice is small..' + filename);
+      console.log(`合計点：${judge}\n画像処理：${imageresult}\n音声処理：${volumeresult}\n使用GIF${filename}`);
       
-    }else if(judge > 0.05) {
+    }else if(judge > 10) {
       filename = 'assets/test3.gif';
-      console.log('your voice is so small...' + filename);
-      
+      console.log(`合計点：${judge}\n画像処理：${imageresult}\n音声処理：${volumeresult}\n使用GIF${filename}`);
+
     }else {
-      console.log('bag');
+      filename = 'assets/test3.gif';
+      console.log(`合計点：${judge}\n画像処理：${imageresult}\n音声処理：${volumeresult}\n使用GIF${filename}`);
+
     }
     video.src = chrome.extension.getURL(filename);
     console.log('1秒経過しました！');
@@ -259,26 +270,24 @@ function changeVideo(judge) {
   });
 }
 
+function calcSurpriseDegree() {
+  var realImageResult = imageresult;
+  var realVolumeResult = volumeresult * 500;
+  return realVolumeResult + realImageResult;
+}
+
 function sleep(waitSec, callbackFunc) {
-
   var spanedSec = 0;
-
   var waitFunc = function () {
-
       spanedSec++;
-
       if (spanedSec >= waitSec) {
           if (callbackFunc) callbackFunc();
           return;
       }
-
       clearTimeout(id);
       id = setTimeout(waitFunc, 1000);
-  
   };
-
   var id = setTimeout(waitFunc, 1000);
-
 }
 
 /*
