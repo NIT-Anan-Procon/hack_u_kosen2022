@@ -3,7 +3,7 @@
 // Built With ? At 9/8/2015
 var previousVolume = 0;
 
-var imagebox = '<div class="shia-do-it" id="target"><div class="container"><img height=500 name="media"></div></div>';
+var imagebox = '<div class="shia-do-it" id="target"><div class="container"><img width="500" name="media"><div class="message" id="message"><p>なんのサイトを見てるのだ？</p></div></div></div>';
 
 var imageresult = 0;
 var volumeresult = 0;
@@ -15,7 +15,6 @@ var volumeresult = 0;
   Test();
   injectCss();
   addVideo();
-  //ここに追加
 })();
 
 function setup() {
@@ -234,6 +233,9 @@ function changeVideo() {
   //泣く前事前準備
   changeVideobefore();
   
+  //テキスト変更
+  changeMessage("わあ！！");
+
   //1秒後に変換
   sleep(2, function() {
     //今出てる画像を削除する。
@@ -241,41 +243,42 @@ function changeVideo() {
     var $videoDiv = $.parseHTML(imagebox);
     $('body').append($videoDiv);
     var video = $($videoDiv).find('img').get(0);
-    var filename = 'assets/test3.gif';
+    var filename;
 
+    //オドロキ度を計算
     var judge = calcSurpriseDegree();
     
     if(judge > 80) {
       filename = 'assets/test4.gif';
-      console.log(`合計点：${judge}\n画像処理：${imageresult}\n音声処理：${volumeresult}\n使用GIF${filename}`);
-      
     }else if(judge > 60) {
       filename = 'assets/test4.gif';
-      console.log(`合計点：${judge}\n画像処理：${imageresult}\n音声処理：${volumeresult}\n使用GIF${filename}`);
-      
     }else if(judge > 30) {
       filename = 'assets/test3.gif';
-      console.log(`合計点：${judge}\n画像処理：${imageresult}\n音声処理：${volumeresult}\n使用GIF${filename}`);
-      
     }else if(judge > 10) {
       filename = 'assets/test3.gif';
-      console.log(`合計点：${judge}\n画像処理：${imageresult}\n音声処理：${volumeresult}\n使用GIF${filename}`);
-
     }else {
       filename = 'assets/test3.gif';
-      console.log(`合計点：${judge}\n画像処理：${imageresult}\n音声処理：${volumeresult}\n使用GIF${filename}`);
-
     }
-    video.src = chrome.extension.getURL(filename);
+    console.log(`使用GIF${filename}`);
     console.log('1秒経過しました！');
-    //新しい画像をページに追加する
+    video.src = chrome.extension.getURL(filename);
+
+    changeMessage("オドロキ度：" + Math.ceil(judge) + "点\nビックリしたのだ...");
+    
   });
 }
 
+function changeMessage(message) {
+  document.getElementById("message").textContent = message;
+}
+
+//オドロキ度を計算
 function calcSurpriseDegree() {
   var realImageResult = imageresult;
   var realVolumeResult = volumeresult * 500;
-  return realVolumeResult + realImageResult;
+  var result = realVolumeResult + realImageResult;
+  console.log(`合計点：${result}\n画像処理：${realImageResult}\n音声処理：${realVolumeResult}`);
+  return result;
 }
 
 function sleep(waitSec, callbackFunc) {
@@ -291,6 +294,7 @@ function sleep(waitSec, callbackFunc) {
   };
   var id = setTimeout(waitFunc, 1000);
 }
+
 
 /*
 var BANNER_APPEAR_DELAY = 1000 * 0.5;
