@@ -110,6 +110,9 @@ function addVideo() {
   var filename = 'assets/test.gif';
   video.src = chrome.extension.getURL(filename);
 
+  //3. メッセージをランダム出力
+  changeMessage();
+
   video.onended = function () {
     removeVideo(true);
   };
@@ -270,6 +273,19 @@ function changeVideo() {
 
 function changeMessage(message) {
   document.getElementById("message").textContent = message;
+}
+
+function changeMessage() {
+  var messagebox = [
+    "げんきなのだ？",
+    "なに変なサイトみてるのだ？",
+    "課題をさっさとおわらせるのだ",
+    "親孝行はおこたったらだめなのだ",
+    "ぼくにあいさつしろなのだ",
+    "つかれたふりするななのだ"
+  ];
+  var num = Math.floor(Math.random() * 6);
+  document.getElementById("message").textContent = messagebox[num];
 }
 
 //オドロキ度を計算
