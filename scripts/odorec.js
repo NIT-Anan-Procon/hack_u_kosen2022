@@ -111,46 +111,27 @@ function addVideo() {
   video.src = chrome.extension.getURL(filename);
 
   //3. メッセージをランダム出力
-  changeMessage();
+  changeMessageStandard();
 
-  video.onended = function () {
-    removeVideo(true);
-  };
+  // video.onended = function () {
+  //   removeVideo(true);
+  // };
 
-  video.addEventListener('loadeddata', function () {
-    $(video).css('visibility', 'visible');
-    video.play();
-  }, false);
+  // video.addEventListener('loadeddata', function () {
+  //   $(video).css('visibility', 'visible');
+  //   video.play();
+  // }, false);
 
   //エラー制御
   video.onerror = function () {
     alert('ooops... Shia had a problem. try on another tab');
-    removeVideo(false);
+    //removeVideo(false);
   };
 
-  video.load();
+  //video.load();
 }
 
-function removeVideo(showRateMe) {
-  var $videoEl = $('.shia-do-it');
-  if ($videoEl !== null) {
-    $videoEl.remove();
 
-    chrome.storage.sync.get([BANNER_LOCAL_STORAGE_KEY, LIKEONFB_LOCAL_STORAGE_KEY], function (data) {
-
-      var shouldShow = showRateMe;
-
-      //in case we've shown before make use of the probabilty
-      if (data[BANNER_LOCAL_STORAGE_KEY] || data[LIKEONFB_LOCAL_STORAGE_KEY]) {
-        shouldShow = shouldShow && isShouldShowBanner();
-      }
-
-      if (shouldShow) {
-        addRateMe();
-      }
-    });
-  }
-}
 
 // メーターの生成
 function createAudioMeter(audioContext, clipLevel, averaging, clipLag) {
@@ -275,7 +256,7 @@ function changeMessage(message) {
   document.getElementById("message").textContent = message;
 }
 
-function changeMessage() {
+function changeMessageStandard() {
   var messagebox = [
     "げんきなのだ？",
     "なに変なサイトみてるのだ？",
@@ -370,5 +351,26 @@ function addRateMe() {
   setTimeout(function () {
     removeRateMe(true);
   }, BANNER_REMOVE_AFTER_SEC);
+}
+
+function removeVideo(showRateMe) {
+  var $videoEl = $('.shia-do-it');
+  if ($videoEl !== null) {
+    $videoEl.remove();
+
+    chrome.storage.sync.get([BANNER_LOCAL_STORAGE_KEY, LIKEONFB_LOCAL_STORAGE_KEY], function (data) {
+
+      var shouldShow = showRateMe;
+
+      //in case we've shown before make use of the probabilty
+      if (data[BANNER_LOCAL_STORAGE_KEY] || data[LIKEONFB_LOCAL_STORAGE_KEY]) {
+        shouldShow = shouldShow && isShouldShowBanner();
+      }
+
+      if (shouldShow) {
+        addRateMe();
+      }
+    });
+  }
 }
 */
