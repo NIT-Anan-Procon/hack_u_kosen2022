@@ -3,7 +3,7 @@
 // Built With ? At 9/8/2015
 var previousVolume = 0;
 
-var imagebox = '<div class="shia-do-it" id="target"><div class="container"><img width="500" name="media"><div class="message" id="message"><p>なんのサイトを見てるのだ？</p></div><div class="meter" id="meter">メーター</div></div></div>';
+var imagebox = '<div class="shia-do-it" id="target"><div class="container"><img width="500" name="media"><div class="message" id="message"><p>なんのサイトを見てるのだ？</p></div></div></div>';
 
 var imageresult = 0;
 var volumeresult = 0;
