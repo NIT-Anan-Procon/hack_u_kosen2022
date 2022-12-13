@@ -23,34 +23,34 @@ function setup() {
 
   let video = document.getElementById("camera");
   navigator.mediaDevices
-  .getUserMedia({
-    audio: false,
-    video: {
-      width: 1280,
-      height: 720,
-    },
-  })
-  .then((stream) => {
-    video.srcObject = stream;
-    video.onloadedmetadata = () => {
-      video.play();
-    };
-  })
-  .catch((error) => {
-    console.log(error.name + ": " + error.message);
-  });
+    .getUserMedia({
+      audio: false,
+      video: {
+        width: 1280,
+        height: 720,
+      },
+    })
+    .then((stream) => {
+      video.srcObject = stream;
+      video.onloadedmetadata = () => {
+        video.play();
+      };
+    })
+    .catch((error) => {
+      console.log(error.name + ": " + error.message);
+    });
 
   // オーディオストリームの生成
   let audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
   // 音声入力の開始
   if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
-          // メディアストリームソースとメーターの生成
-          let mediaStreamSource = audioContext.createMediaStreamSource(stream);
-          let meter = createAudioMeter(audioContext);
-          mediaStreamSource.connect(meter);
-      })
+    navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+      // メディアストリームソースとメーターの生成
+      let mediaStreamSource = audioContext.createMediaStreamSource(stream);
+      let meter = createAudioMeter(audioContext);
+      mediaStreamSource.connect(meter);
+    })
   }
 }
 
@@ -85,7 +85,7 @@ function Test() {
         imageresult = data["variable"];
         console.log(imageresult);
       });
-      //2秒間隔でデータ送信
+    //2秒間隔でデータ送信
   }, 700);
 }
 
@@ -148,19 +148,19 @@ function createAudioMeter(audioContext, clipLevel, averaging, clipLag) {
 
   // クリップチェック時に呼ばれる
   processor.checkClipping = function () {
-      if (!this.clipping) {
-          return false;
-      }
-      if ((this.lastClip + this.clipLag) < window.performance.now()) {
-          this.clipping = false;
-      }
-      return this.clipping;
+    if (!this.clipping) {
+      return false;
+    }
+    if ((this.lastClip + this.clipLag) < window.performance.now()) {
+      this.clipping = false;
+    }
+    return this.clipping;
   }
 
   // シャットダウン時に呼ばれる
   processor.shutdown = function () {
-      this.disconnect();
-      this.onaudioprocess = null;
+    this.disconnect();
+    this.onaudioprocess = null;
   }
 
   return processor;
@@ -175,12 +175,12 @@ function volumeAudioProcess(event) {
 
   // 平均ボリュームの計算
   for (var i = 0; i < bufLength; i++) {
-      x = buf[i];
-      if (Math.abs(x) >= this.clipLevel) {
-          this.clipping = true;
-          this.lastClip = window.performance.now();
-      }
-      sum += x * x;
+    x = buf[i];
+    if (Math.abs(x) >= this.clipLevel) {
+      this.clipping = true;
+      this.lastClip = window.performance.now();
+    }
+    sum += x * x;
   }
   const rms = Math.sqrt(sum / bufLength);
   //計算には二乗平均平方根(RMS: root mean square）を用いる
@@ -188,19 +188,19 @@ function volumeAudioProcess(event) {
 
   // ボリュームの表示
   if (this.volume - previousVolume > 0.05) {
-      var tmpVolume = this.volume - previousVolume;
-      console.log(tmpVolume);
-      //グローバル変数volumeresultに計測値を保存
-      volumeresult = tmpVolume;
-      //ボリュームの大きさで画像を変える
-      changeVideo();
+    var tmpVolume = this.volume - previousVolume;
+    console.log(tmpVolume);
+    //グローバル変数volumeresultに計測値を保存
+    volumeresult = tmpVolume;
+    //ボリュームの大きさで画像を変える
+    changeVideo();
   }
   previousVolume = this.volume;
 }
 
 //泣く前事前準備
 function changeVideobefore() {
-  
+
   //今出てる画像を削除する。
   document.getElementById('target').remove();
 
@@ -216,40 +216,63 @@ function changeVideobefore() {
 function changeVideo() {
   //泣く前事前準備
   changeVideobefore();
-  
+
   //テキスト変更
   changeMessage("わあ！！");
 
   //1秒後に変換
-  sleep(2, function() {
+  sleep(2, function () {
     //今出てる画像を削除する。
     document.getElementById('target').remove();
     var $videoDiv = $.parseHTML(imagebox);
     $('body').append($videoDiv);
     var video = $($videoDiv).find('img').get(0);
     var filename;
+    var surpriseMessage;
 
     //オドロキ度を計算
     var judge = calcSurpriseDegree();
-    
-    if(judge > 80) {
+
+    if (judge > 80) {
       filename = 'assets/test4.gif';
-    }else if(judge > 60) {
+      surpriseMessage = "ふぇぇぇ";
+    } else if (judge > 50) {
       filename = 'assets/test4.gif';
-    }else if(judge > 30) {
+      surpriseMessage = "うっうっうっ";
+    } else if (judge > 30) {
       filename = 'assets/test3.gif';
-    }else if(judge > 10) {
-      filename = 'assets/test3.gif';
-    }else {
-      filename = 'assets/test3.gif';
+      surpriseMessage = "びっくりしたのだ";
+    } else if (judge > 10) {
+      filename = 'assets/test.gif';
+      surpriseMessage = "やめるのだ";
+      sleep(2, function () {
+        changeMessageStandard();
+        console.log("初期状態に戻りました");
+      });
+    } else {
+      filename = 'assets/test.gif';
+      surpriseMessage = "なにしてるのだ？";
+      sleep(2, function () {
+        changeMessageStandard();
+        console.log("初期状態に戻りました");
+      });
     }
     console.log(`使用GIF${filename}`);
     console.log('1秒経過しました！');
     video.src = chrome.extension.getURL(filename);
 
-    changeMessage("オドロキ度：" + Math.ceil(judge) + "点\nビックリしたのだ...");
-    
+    changeMessage(surpriseMessage);
+
+    //TO DO
+    //changeStyle();
+
   });
+}
+
+//****TODO レベルアップできるようにするバーの表示****** */
+function changeStyle() {
+  $width = "20px";
+  document.getElementById("meter").style.width = $width;
 }
 
 function changeMessage(message) {
@@ -272,7 +295,7 @@ function changeMessageStandard() {
 //オドロキ度を計算
 function calcSurpriseDegree() {
   var realImageResult = imageresult;
-  var realVolumeResult = volumeresult * 500;
+  var realVolumeResult = volumeresult * 300;
   var result = realVolumeResult + realImageResult;
   console.log(`合計点：${result}\n画像処理：${realImageResult}\n音声処理：${realVolumeResult}`);
   return result;
@@ -281,96 +304,13 @@ function calcSurpriseDegree() {
 function sleep(waitSec, callbackFunc) {
   var spanedSec = 0;
   var waitFunc = function () {
-      spanedSec++;
-      if (spanedSec >= waitSec) {
-          if (callbackFunc) callbackFunc();
-          return;
-      }
-      clearTimeout(id);
-      id = setTimeout(waitFunc, 1000);
+    spanedSec++;
+    if (spanedSec >= waitSec) {
+      if (callbackFunc) callbackFunc();
+      return;
+    }
+    clearTimeout(id);
+    id = setTimeout(waitFunc, 1000);
   };
   var id = setTimeout(waitFunc, 1000);
 }
-
-
-/*
-var BANNER_APPEAR_DELAY = 1000 * 0.5;
-var BANNER_REMOVE_AFTER_SEC = 1000 * 8;
-var BANNER_APPEAR_PROBABILITY = 0.05;
-var BANNER_LOCAL_STORAGE_KEY = 'hasClickedOnBanner';
-var LIKEONFB_LOCAL_STORAGE_KEY = 'hasClickedOnBannerLikeOnFB';
-*/
-
-/*
-function reset() {
-  removeVideo(false);
-  removeRateMe(false);
-}
-*/
-
-/*
-function removeRateMe(isSlow) {
-  var speed = isSlow ? 'slow' : 'fast';
-  var $rateMeDiv = $('.shia-rate-me-now');
-  $rateMeDiv.fadeOut(speed);
-}
-*/
-
-/*
-function isShouldShowBanner() {
-  var num = parseInt(Math.random() * 100) + 1;
-  var result = num <= BANNER_APPEAR_PROBABILITY * 100;
-
-  return result;
-}
-*/
-
-/*
-function addRateMe() {
-
-  var $rateUsElement = $($.parseHTML('<div class="shia-rate-me-now">' +
-    '<a target="_blank" href="http://www.facebook.com/CasuaLOL/">' +
-    '<img src="' + chrome.extension.getURL('images/likeonfb.png') + '">' +
-    '</a>' +
-    '</div>'));
-
-  $rateUsElement.click(function () {
-    var saveData = {};
-    saveData[LIKEONFB_LOCAL_STORAGE_KEY] = true;
-
-    chrome.storage.sync.set(saveData, function () {
-      removeRateMe(false);
-    });
-  });
-
-  $('body').append($rateUsElement);
-  setTimeout(function () {
-    $rateUsElement.fadeIn('slow');
-  }, BANNER_APPEAR_DELAY);
-
-  setTimeout(function () {
-    removeRateMe(true);
-  }, BANNER_REMOVE_AFTER_SEC);
-}
-
-function removeVideo(showRateMe) {
-  var $videoEl = $('.shia-do-it');
-  if ($videoEl !== null) {
-    $videoEl.remove();
-
-    chrome.storage.sync.get([BANNER_LOCAL_STORAGE_KEY, LIKEONFB_LOCAL_STORAGE_KEY], function (data) {
-
-      var shouldShow = showRateMe;
-
-      //in case we've shown before make use of the probabilty
-      if (data[BANNER_LOCAL_STORAGE_KEY] || data[LIKEONFB_LOCAL_STORAGE_KEY]) {
-        shouldShow = shouldShow && isShouldShowBanner();
-      }
-
-      if (shouldShow) {
-        addRateMe();
-      }
-    });
-  }
-}
-*/
