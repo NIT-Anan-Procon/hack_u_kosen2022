@@ -5,6 +5,7 @@ Built With ? At 9/8/2015
 */
 
 .shia-do-it {
+  background-color: bisque;
   position: fixed;
   bottom: 0;
   right: 0;
@@ -13,6 +14,7 @@ Built With ? At 9/8/2015
 }
 
 .shia-do-it .container {
+  background-color: #ffb03c;
   width: 100%;
   height: 100%;
   text-align: center;
@@ -23,6 +25,19 @@ Built With ? At 9/8/2015
 }
 
 .message {
+  display: inline-block;
+  width: 400px;
+  height: 100%;
+  font-size: large;
+  border-radius: 100px;
+  padding: 0.5em 1em;
+  background: -moz-linear-gradient(#ffb03c, #ff708d);
+  background: -webkit-linear-gradient(#ffb03c, #ff708d);
+  background: linear-gradient(to right, #ffb03c, #ff708d);
+  color: #FFF;
+}
+
+.meter {
   display: inline-block;
   width: 400px;
   height: 100%;
