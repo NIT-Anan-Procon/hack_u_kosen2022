@@ -7,6 +7,7 @@ var imagebox = '<div class="shia-do-it" id="target"><div class="container"><img 
 
 var imageresult = 0;
 var volumeresult = 0;
+var faceExist = false;
 
 'use strict';
 
@@ -16,6 +17,8 @@ var volumeresult = 0;
   injectCss();
   addVideo();
 })();
+
+// setInterval(Test, 700)
 
 function setup() {
   var $test = $.parseHTML('<div class="test"><video id="camera" width="1280" height="720"></video><canvas id="canvas" width="1280" height="720"></canvas></div>');
@@ -83,7 +86,9 @@ function Test() {
       })
       .then(function (data) {
         imageresult = data["variable"];
-        console.log(imageresult);
+        faceExist = data["recognition"];
+        console.log("imageResult " + imageresult);
+        console.log("faceExit " + faceExist);
       });
     //2秒間隔でデータ送信
   }, 700);
@@ -296,9 +301,12 @@ function changeMessageStandard() {
 
 //オドロキ度を計算
 function calcSurpriseDegree() {
-  var realImageResult = imageresult;
-  var realVolumeResult = volumeresult * 300;
-  var result = realVolumeResult + realImageResult;
+  let realImageResult = 0
+  if(faceExist){
+    realImageResult = imageresult;
+  }
+  let realVolumeResult = volumeresult * 300;
+  let result = realVolumeResult + realImageResult;
   console.log(`合計点：${result}\n画像処理：${realImageResult}\n音声処理：${realVolumeResult}`);
   return result;
 }
